@@ -98,6 +98,8 @@ if [ ! -d "/etc/letsencrypt/live/${LETSENCRYPT_DOMAIN#\*\.}" ] || \
    [ ! -f "/etc/letsencrypt/live/${LETSENCRYPT_DOMAIN#\*\.}/privkey.pem" ]; then
   echo "ERROR: Failed to create SSL certificates"
   exit 1
+else
+  eval $POST_HOOK
 fi
 
 # Check if certificates require renewal twice a day
