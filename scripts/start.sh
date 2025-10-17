@@ -112,6 +112,8 @@ while :; do
   sleep $((${LETSENCRYPT_DELAY} * 60)) # Convert to seconds
 
   echo "INFO: Attempting SSL certificate renewal"
-  certbot --manual-public-ip-logging-ok renew
+  certbot renew
   chown -R $UID:$GID /etc/letsencrypt
+  echo "executing eval POST_HOOK..."
+  eval "${POST_HOOK}"
 done
