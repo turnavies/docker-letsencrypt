@@ -57,6 +57,7 @@ echo "LETSENCRYPT_CHAIN: $LETSENCRYPT_CHAIN"
 echo "TESTING: $TESTING"
 echo "UID: $UID"
 echo "GID: $GID"
+echo "POST_HOOK: $POST_HOOK"
 
 if [ -z "$LETSENCRYPT_EMAIL" ]; then
   EMAIL_PARAM="--register-unsafely-without-email"
@@ -99,6 +100,9 @@ if [ ! -d "/etc/letsencrypt/live/${LETSENCRYPT_DOMAIN#\*\.}" ] || \
   echo "ERROR: Failed to create SSL certificates"
   exit 1
 fi
+
+echo "executing eval POST_HOOK..."
+eval "${POST_HOOK}"
 
 # Check if certificates require renewal twice a day
 while :; do
